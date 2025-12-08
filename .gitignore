@@ -4,6 +4,8 @@ __pycache__/
 *.pyc
 .env
 .mypy_cache/
+*.md
+!README.md
 
 # bun vite jsx depndencies
 
@@ -27,8 +29,6 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
-*.ntvs*
-*.njsproj
 *.sln
 *.sw?
 eslint.config.js
@@ -36,3 +36,9 @@ uv.lock
 
 vite.config.js
 jsconfig.json
+.env.production
+
+
+Dockerfile
+docker-compose.yml
+Dockerfile.backend

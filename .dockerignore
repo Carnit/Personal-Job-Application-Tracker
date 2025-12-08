@@ -1,0 +1,131 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment files (don't include in Docker image)
+.env
+.env.local
+.env.*.local
+.env.example
+
+# Virtual Environments
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv
+ENV/
+build/
+
+# Node Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+.npm/
+
+# IDE & Editor
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.editorconfig
+
+# Python Specific
+.pytest_cache
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.hypothesis/
+*.cover
+.cache
+.pytest_cache
+
+# Node/React Build Files
+job_tracker_frontend/dist/
+job_tracker_frontend/build/
+job_tracker_frontend/.next
+job_tracker_frontend/out/
+job_tracker_frontend/.cache/
+job_tracker_frontend/node_modules/
+
+# Project Specific
+model.pkl
+*.pkl
+train_model.py
+database_backups/
+backups/
+logs/
+*.log
+
+# Docker Files (don't need in image)
+.dockerignore
+Dockerfile
+Dockerfile.backend
+docker-compose.yml
+docker-compose.prod.yml
+docker-compose.override.yml
+
+# Documentation
+README.md
+DEPLOYMENT.md
+API.md
+CACHING.md
+ANALYTICS.md
+*.md
+docs/
+CONTRIBUTING.md
+LICENSE
+
+# Testing
+tests/
+test_*.py
+*_test.py
+.pytest/
+coverage/
+
+# Temporary Files
+*.tmp
+*.bak
+*.swp
+*.temp
+.temp/
+tmp/
+temp/
+*.log
+tmp/
+temp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Development only
+*.local
+.env.example
+.env.production.example
+*.md
