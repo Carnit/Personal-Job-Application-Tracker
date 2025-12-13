@@ -4,8 +4,6 @@ __pycache__/
 *.pyc
 .env
 .mypy_cache/
-*.md
-!README.md
 
 # bun vite jsx depndencies
 
