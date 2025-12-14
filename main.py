@@ -8,13 +8,14 @@ import hashlib
 import pickle
 import logging
 from typing import List, Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from contextlib import asynccontextmanager
 from functools import lru_cache
 from fastapi import FastAPI, Depends, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func, desc
 from sqlalchemy.orm import Session
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 import redis
 
 from database import (
@@ -30,17 +31,10 @@ from database import (
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-# Initialize FastAPI app
-app = FastAPI(
-    title="Job Application Tracker API",
-    description="API for tracking and analyzing job applications",
-    version="1.0.0",
-)
 
 
-# Initialize database on startup
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     """Initialize database tables on application startup."""
     try:
         init_db()
@@ -48,6 +42,16 @@ async def startup_event():
     except Exception as e:
         logger.error(f"✗ Database initialization failed: {e}")
         raise
+    yield
+
+
+# Initialize FastAPI app
+app = FastAPI(
+    title="Job Application Tracker API",
+    description="API for tracking and analyzing job applications",
+    version="1.0.0",
+    lifespan=lifespan,
+)
 
 
 # CORS configuration
@@ -98,7 +102,9 @@ class JobApplicationBase(BaseModel):
     position_title: str = Field(..., min_length=1, max_length=255)
     current_stage: ApplicationStage = ApplicationStage.RESUME_SCREENING
     status: ApplicationStatus = ApplicationStatus.PENDING
-    application_date: datetime = Field(default_factory=datetime.utcnow)
+    application_date: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
     rejection_reason: Optional[str] = None
     job_url: Optional[str] = None
     notes: Optional[str] = None
@@ -139,8 +145,7 @@ class JobApplicationResponse(JobApplicationBase):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AnalyticsOverviewResponse(BaseModel):
@@ -209,7 +214,7 @@ async def health_check():
     """Health check endpoint."""
     return {
         "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
@@ -411,11 +416,11 @@ def update_application(
             detail="Application not found",
         )
 
-    update_data = application_update.dict(exclude_unset=True)
+    update_data = application_update.model_dump(exclude_unset=True)
     for key, value in update_data.items():
         setattr(db_application, key, value)
 
-    db_application.updated_at = datetime.utcnow()
+    db_application.updated_at = datetime.now(timezone.utc)
 
     try:
         db.commit()
@@ -635,7 +640,7 @@ def get_rejection_analysis(
     except redis.ConnectionError:
         logger.warning("Redis connection error, proceeding without cache")
 
-    cutoff_date = datetime.utcnow() - timedelta(days=days)
+    cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
 
     query = db.query(JobApplication).filter(
         JobApplication.status == ApplicationStatus.REJECTED,
@@ -812,7 +817,7 @@ def get_time_series_analysis(
     Returns:
     - List of daily data points with application counts, rejections, etc.
     """
-    cutoff_date = datetime.utcnow() - timedelta(days=days)
+    cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
 
     data_points = []
     for i in range(days):

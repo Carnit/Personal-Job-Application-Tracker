@@ -2,8 +2,6 @@
 
 > A modern, full-stack web application to track, analyze, and optimize your job search journey.
 
-**[Quick Start](#-quick-start)** • **[Features](#-features)** • **[Tech Stack](#-tech-stack)** • **[Documentation](#-documentation)**
-
 ---
 
 ## 🎯 What is This?
@@ -23,7 +21,9 @@ Perfect for anyone going through a serious job search and wanting data-driven in
 ## ✨ Key Features
 
 ### 📝 Smart Application Tracking
+
 Track every detail of your job search in one place:
+
 - Company name, position, salary range
 - Application stage (Resume → Phone Screen → Technical → Onsite → Offer)
 - Status tracking (Pending, Accepted, Rejected, Withdrawn)
@@ -32,7 +32,9 @@ Track every detail of your job search in one place:
 - Multiple application sources (LinkedIn, Referrals, Job Boards, etc.)
 
 ### 📈 Powerful Analytics Dashboard
+
 Gain insights into your job search patterns:
+
 - **Key Metrics**: Total apps, active applications, rejection rate, offers
 - **Stage Breakdown**: See where most applications get filtered out
 - **Source Analysis**: Understand which job boards work best for you
@@ -40,14 +42,18 @@ Gain insights into your job search patterns:
 - **90-Day Timeline**: Visualize your progress over time
 
 ### 🤖 ML-Powered Success Predictions
+
 Let AI help predict your chances:
+
 - Machine learning model trained on your historical data
 - Predicts success probability for new applications
 - Considers: company, source, time of application, day of week
 - Learns and improves over time
 
 ### ⚡ Lightning-Fast Performance
+
 Optimized for speed:
+
 - Redis caching for 50%+ faster API responses
 - Lazy-loading frontend components
 - Database query optimization with indexes
@@ -58,6 +64,7 @@ Optimized for speed:
 ## 🏗️ How It Works
 
 ```
+
 Your Computer
       ↓
 ┌─────────────────────┐
@@ -135,10 +142,12 @@ bun dev
 ### Step 1: Add Your Applications
 
 ```
+
 Click "+ Add Application" → Fill in details → Save
 ```
 
 Fields you can track:
+
 - Company & Position
 - Stage & Status
 - Salary range
@@ -149,6 +158,7 @@ Fields you can track:
 ### Step 2: Track Progress
 
 In the **Applications** tab:
+
 - See all your applications in a table
 - Filter by company, stage, or status
 - Click on any application to view/edit details
@@ -157,6 +167,7 @@ In the **Applications** tab:
 ### Step 3: Review Analytics
 
 In the **Analytics** tab:
+
 - View key metrics (total apps, rejection rate, etc.)
 - See which stages filter most applications
 - Compare different application sources
@@ -166,6 +177,7 @@ In the **Analytics** tab:
 ### Step 4: Make Data-Driven Decisions
 
 Use insights to:
+
 - Focus on sources that work
 - Target companies with high success rates
 - Improve weak areas in your pipeline
@@ -178,6 +190,7 @@ Use insights to:
 ### Create/Read/Update/Delete Applications
 
 ```
+
 POST   /api/applications              Create new application
 GET    /api/applications              List with filtering
 GET    /api/applications/{id}         Get one application
@@ -188,6 +201,7 @@ DELETE /api/applications/{id}         Delete application
 ### Analytics Endpoints
 
 ```
+
 GET    /api/analytics/overview        Get dashboard metrics
 GET    /api/analytics/rejections      Analyze rejections
 GET    /api/analytics/time-series     90-day trends
@@ -199,6 +213,11 @@ See **[API.md](./API.md)** for detailed examples.
 ---
 
 ## ⚡ Performance
+
+I take performance seriously. The application is optimized to handle high loads efficiently.
+
+![Locust Load Test Results](./locust_test.png)
+*Figure: Locust load testing results showing system stability under load.*
 
 Results with caching enabled:
 
@@ -217,6 +236,7 @@ That's why caching is so important!
 The model learns from your data:
 
 ```
+
 Historical Data
 ├── Company (Google, Microsoft, etc.)
 ├── Application Source (LinkedIn, Referral, etc.)
@@ -242,14 +262,14 @@ Create a `.env` file in the root directory:
 
 ```bash
 # Database Settings
-DB_USER=carnit
-DB_PASSWORD=user@carnit
+DB_USER=your_username
+DB_PASSWORD=your_password
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=job_tracker_db
 
 # Cache Settings
-REDIS_PASSWORD=redis123
+REDIS_PASSWORD=your_redis_password
 
 # URLs
 BACKEND_URL=http://localhost:8000
@@ -277,7 +297,7 @@ taskkill /PID <PID> /F
 
 ```bash
 # Make sure PostgreSQL is running
-psql -U carnit -d job_tracker_db
+psql -U your_username -d job_tracker_db
 
 # If using Docker:
 docker-compose restart postgres
@@ -315,28 +335,12 @@ For more details, check out:
 
 ---
 
-## 🎓 What You'll Learn
-
-This project showcases real-world development:
-
-- ✅ Full-stack web development (React + Python)
-- ✅ RESTful API design principles
-- ✅ Database optimization and indexing
-- ✅ Caching strategies for performance
-- ✅ Machine learning integration
-- ✅ Docker containerization
-- ✅ TypeScript for type safety
-- ✅ Modern UI/UX design
-
-Great resource for building your own projects!
-
----
-
 ## 🚀 Deployment
 
 ### Deploy to Cloud
 
 Supports deployment to:
+
 - AWS EC2 + RDS + ElastiCache
 - DigitalOcean App Platform
 - Railway
@@ -400,6 +404,7 @@ Personal project - feel free to use and modify!
 ## 🙏 Acknowledgments
 
 Built with:
+
 - FastAPI for the amazing backend framework
 - React for the responsive UI
 - PostgreSQL for reliable data storage
@@ -408,8 +413,6 @@ Built with:
 
 ---
 
-**Happy job hunting! 🚀**
-
-*Last Updated: December 7, 2025*
+*Last Updated: December 14, 2025*
 
 *Built with ❤️ by Carnit*

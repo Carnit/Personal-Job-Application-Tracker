@@ -40,3 +40,9 @@ jsconfig.json
 Dockerfile
 docker-compose.yml
 Dockerfile.backend
+
+
+test_database.py
+test_main.py
+test_train_model.py
+*.pkl

@@ -14,7 +14,7 @@ from sqlalchemy import (
     Enum,
 )
 from sqlalchemy.orm import sessionmaker, declarative_base
-from datetime import datetime
+from datetime import datetime, timezone
 import urllib.parse
 import enum
 
@@ -82,7 +82,9 @@ class JobApplication(Base):  # type: ignore
     status = Column(
         Enum(ApplicationStatus), default=ApplicationStatus.PENDING, index=True
     )
-    application_date = Column(DateTime, default=datetime.utcnow, index=True)
+    application_date = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), index=True
+    )
     rejection_reason = Column(String, nullable=True)
     job_url = Column(String, nullable=True)
     notes = Column(Text, nullable=True)
@@ -93,8 +95,14 @@ class JobApplication(Base):  # type: ignore
         Enum(ApplicationSource), default=ApplicationSource.OTHER, index=True
     )
     follow_up_date = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, index=True)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(
+        DateTime, default=lambda: datetime.now(timezone.utc), index=True
+    )
+    updated_at = Column(
+        DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
 
     def __repr__(self) -> str:
         return f"<JobApplication(id={self.id}, company={self.company}, position={self.position_title})>"

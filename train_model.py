@@ -7,7 +7,7 @@ of job applications based on historical data.
 
 import pickle
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Tuple
 
 import numpy as np
@@ -56,7 +56,7 @@ def get_features_from_application(app: JobApplication, label_encoders: dict) -> 
         List of feature values
     """
     # Days since application
-    days_since = (datetime.utcnow() - app.application_date).days
+    days_since = (datetime.now(timezone.utc) - app.application_date).days
 
     # Encode categorical variables
     company_encoded = label_encoders["company"].transform([app.company])[0]
@@ -90,7 +90,7 @@ def prepare_training_data(db: Session) -> Tuple[np.ndarray, np.ndarray, dict]:
         Tuple of (features, labels, label_encoders)
     """
     # Get all applications from last 6 months
-    six_months_ago = datetime.utcnow() - timedelta(days=180)
+    six_months_ago = datetime.now(timezone.utc) - timedelta(days=180)
     applications = (
         db.query(JobApplication)
         .filter(JobApplication.application_date >= six_months_ago)
