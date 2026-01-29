@@ -12,7 +12,7 @@ export default function AddApplication({ onSuccess }: AddApplicationProps) {
     position_title: '',
     current_stage: 'resume_screening',
     status: 'pending',
-    application_date: new Date().toISOString().slice(0, 16),
+    application_date: new Date().toISOString().slice(0, 10),
     location: '',
     job_url: '',
     notes: '',
@@ -37,7 +37,7 @@ export default function AddApplication({ onSuccess }: AddApplicationProps) {
     } else if (name === 'application_date') {
       setFormData({
         ...formData,
-        [name]: new Date(value).toISOString(),
+        [name]: value ? new Date(value).toISOString() : value,
       })
     } else {
       setFormData({
@@ -196,9 +196,9 @@ export default function AddApplication({ onSuccess }: AddApplicationProps) {
               <div>
                 <label className="block text-sm text-slate-300 mb-2">Application Date</label>
                 <input
-                  type="datetime-local"
+                  type="date"
                   name="application_date"
-                  value={formData.application_date?.slice(0, 16) || ''}
+                  value={formData.application_date?.slice(0, 10) || ''}
                   onChange={handleChange}
                   className="w-full rounded-lg bg-slate-700 text-white px-3 py-2 border border-slate-600 focus:border-blue-500 focus:outline-none"
                 />

@@ -261,7 +261,7 @@ export default function ApplicationDetail({ applicationId, onNavigate }: Applica
               {isEditing ? (
                 <input
                   type="datetime-local"
-                  value={editData.follow_up_date?.slice(0, 16) || ''}
+                  value={editData.follow_up_date?.slice(0, 10) || ''}
                   onChange={(e) =>
                     setEditData({ ...editData, follow_up_date: new Date(e.target.value).toISOString() })
                   }
