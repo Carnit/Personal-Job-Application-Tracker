@@ -46,3 +46,6 @@ test_database.py
 test_main.py
 test_train_model.py
 *.pkl
+
+*.lock
+*.json
